@@ -1,0 +1,21 @@
+name: Autograding
+on: [push]
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout student code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install pytest
+          pip install -r requirements.txt 2>/dev/null || true
+
+      - name: Run tests
+        run: python -m pytest tests.py -v
